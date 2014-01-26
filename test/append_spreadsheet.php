@@ -6,8 +6,8 @@ require_once __DIR__ . "/../src/odf_shortcut.php";
 $sheet = new ODF();
 $sheet->open("./append_spreadsheet_input.ods");
 
-$body = $sheet->content->getElementsByTagName("body")->item(0);
-$content = $body->getElementsByTagName("spreadsheet")->item(0);
+$content = ODF_Spreadsheet::getContentBody($sheet);
+
 
 $row1 = $content->getElementsByTagName("table")->item(0)->getElementsByTagName("table-row")->item(0);
 $row2 = $content->getElementsByTagName("table")->item(0)->getElementsByTagName("table-row")->item(1);

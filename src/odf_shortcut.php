@@ -65,6 +65,18 @@ abstract class ODF_Shortcut
 class ODF_Text extends ODF_Shortcut
 {
   /**
+   * Returns the Element /body/text.
+   *
+   * @param DOMDocument $document
+   *
+   * @return DOMElement
+   */
+  public static function getContentBody($document)
+  {
+    return $document->content->getElementsByTagName("body")->item(0)->getElementsByTagName("text")->item(0);
+  }
+
+  /**
    *
    *
    * @param DOMDocument $document
@@ -135,6 +147,7 @@ class ODF_Text extends ODF_Shortcut
     $allowed_attributes = array();
 
     $listheader = self::createElement($document, ODF_Node::list_header, $content);
+
     self::setAttributes($listheader, $attributes, $allowed_attributes);
 
     return $listheader;
@@ -173,6 +186,18 @@ class ODF_Text extends ODF_Shortcut
  */
 class ODF_Spreadsheet extends ODF_Shortcut
 {
+  /**
+   * Returns the Element /body/spreadsheet.
+   *
+   * @param DOMDocument $document
+   *
+   * @return DOMElement
+   */
+  public static function getContentBody($document)
+  {
+    return $document->content->getElementsByTagName("body")->item(0)->getElementsByTagName("spreadsheet")->item(0);
+  }
+
   /**
    *
    * 

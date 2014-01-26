@@ -6,8 +6,7 @@ require_once __DIR__ . "/../src/odf_shortcut.php";
 $text = new ODF();
 $text->create("text");
 
-$body = $text->content->getElementsByTagName("body")->item(0);
-$content = $body->getElementsByTagName("text")->item(0);
+$content = ODF_Text::getContentBody($text);
 
 $content->appendChild(ODF_Text::createHeading($text->content, "Headline 1"));
 $content->appendChild(ODF_Text::createParagraph($text->content, "Using a paragraph shortcut."));
