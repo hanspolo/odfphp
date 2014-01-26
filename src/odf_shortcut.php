@@ -254,3 +254,63 @@ class ODF_Spreadsheet extends ODF_Shortcut
   }
 }
 
+/**
+ *
+ */
+class ODF_Draw extends ODF_Shortcut
+{
+  /**
+   *
+   */
+  public static function getContentBody($document)
+  {
+    return $document->content->getElementsByTagName("body")->item(0)->getElementsByTagName("draw")->item(0);
+  }
+
+  /**
+   * 
+   *
+   * @param DOMDocument $document
+   * @param Mixed $content
+   * @param Array $attributes
+   *
+   * @return DOMElement
+   */
+  public static function createFrame($document, $content, $attributes = array())
+  {
+    $allowed_attributes = array("draw:style-name", "svg:width", "svg:height", "text:anchor-type", "draw:z-index");
+
+    $attributes["draw:style-name"] = "fr1";
+    $attributes["svg:width"] = "15.042cm";
+    $attributes["svg:height"] = "3.076cm";
+    $attributes["text:anchor-type"] = "paragraph";
+    $attributes["draw:z-index"] = 0;
+
+    $frame = self::createElement($document, ODF_Node::frame, $content);
+    self::setAttributes($frame, $attributes, $allowed_attributes);
+
+    return $frame;
+  }
+
+  /**
+   *
+   */
+  public static function createImage($document, $content, $attributes = array())
+  {
+    $allowed_attributes = array(ODF_Attribute::href, "xlink:type", "xlink:show", "xlink:actuate");
+    $attributes["xlink:type"] = "simple";
+    $attributes["xlink:show"] = "embed";
+    $attributes["xlink:actuate"] = "onLoad";
+
+    if (is_string($content))
+      {
+	$attributes[ODF_Attribute::href] = $content;
+	$content = "";
+      }
+
+    $image = self::createElement($document, ODF_Node::image, $content);
+    self::setAttributes($image, $attributes, $allowed_attributes);
+
+    return $image;
+  }
+}

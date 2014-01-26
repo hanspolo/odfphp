@@ -18,6 +18,7 @@ class ODF
   public $meta;
   public $manifest;
   public $mimetype;
+  public $meta_manifest;
   public $others;
 
   /**
@@ -63,6 +64,9 @@ class ODF
 	    break;
 	  case "mimetype":
 	    $this->mimetype = $this->read($zip->getStream($name));
+	    break;
+	  case "META-INF/manifest.xml":
+	    $this->meta_manifest = $this->parse($zip->getStream($name));
 	    break;
 	  default:
 	    $this->others[$name] = $this->read($zip->getStream($name));
@@ -118,6 +122,7 @@ class ODF
 
     $success &= $zip->addFromString("manifest.rdf", $this->manifest);
     $success &= $zip->addFromString("mimetype", $this->mimetype);
+    $success &= $zip->addFromString("META-INF/manifest.xml", $this->meta_manifest->saveXML());
 
     foreach ($this->others as $name => $data)
       $success &= $zip->addFromString($name, $data);
@@ -159,5 +164,35 @@ class ODF
     while ($buffer = fgets($handle))
       $content .= $buffer;
     return $content;
+  }
+
+  /**
+   * Adds a Picture to the archive.
+   *
+   * @param String $path
+   *
+   * @return String
+   *   The path that is used to access the image
+   *
+   * @throws Exception
+   */
+  public function addPicture($path)
+  {
+    $dest = sprintf("Pictures/%s", basename($path));
+
+    if (!file_exists($path))
+      throw new Exception("File '$path' doesn't exist");
+
+    // Add image to Pictures/
+    $handle = fopen($path, "r");
+    $this->others[$dest] = $this->read($handle);
+
+    // Add image to META-INF/manifest.xml
+    $entry = $this->meta_manifest->createElement("manifest:file-entry");
+    $entry->setAttribute("manifest:full-path", $dest);
+    $entry->setAttribute("manifest:media-type", mime_content_type($path));
+    $this->meta_manifest->getElementsByTagName("manifest")->item(0)->appendChild($entry);
+
+    return $dest;
   }
 }

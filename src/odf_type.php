@@ -24,6 +24,9 @@ class ODF_Node
   const table_row = "table:table-row";
   const table_column = "table:table-column";
   const table_cell = "table:table-cell";
+
+  const frame = "draw:frame";
+  const image = "draw:image";
 }
 
 /**
@@ -37,4 +40,5 @@ class ODF_Node
 class ODF_Attribute
 {
   const visibility = "office:visibility";
+  const href = "xlink:href";
 }
