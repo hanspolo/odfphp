@@ -19,7 +19,16 @@ class ODF
 
   public $manifest;
   public $mimetype;
-  public $meta_manifest;
+
+  public $meta_dir;
+  public $picture_dir;
+
+  public function __construct()
+  {
+    $meta_dir = array();
+    $picture_dir = array();
+  }
+
 
   /**
    * Loads an existing file from disk.
@@ -29,6 +38,7 @@ class ODF
   public function open($path)
   {
     $zip = new ZipArchive();
+    $i   = 0;
 
     $result = $zip->open($path);
 
@@ -42,7 +52,20 @@ class ODF
 
     $this->manifest = $this->read($zip->getStream("manifest.rdf"));
     $this->mimetype = $this->read($zip->getStream("mimetype"));
-    $this->meta_manifest = $this->read($zip->getStream("META-INF/manifest.xml"));
+
+    $this->meta_dir["manifest.xml"] = $this->read($zip->getStream("META-INF/manifest.xml"));
+    
+    while ($name = $zip->getNameIndex($i))
+      {
+	$i++;
+
+	if (!preg_match("/Pictures\/.+/i", $name))
+	  continue;
+
+	var_dump($name);
+	$this->picture_dir[$name] = $this->read($zip->getStream("$name"));
+
+      }
 
     $zip->close();
   }
@@ -93,7 +116,11 @@ class ODF
     $success &= $zip->addFromString("manifest.rdf", $this->manifest);
     $success &= $zip->addFromString("mimetype", $this->mimetype);
 
-    $success &= $zip->addFromString("META-INF/manifest.xml", $this->meta_manifest);
+    $success &= $zip->addFromString("META-INF/manifest.xml", $this->meta_dir["manifest.xml"]);
+
+    if (count($this->picture_dir) > 0)
+      foreach ($this->picture_dir as $name => $data)
+	$success &= $zip->addFromString($name, $data);
 
     $success &= $zip->close();
 
