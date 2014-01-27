@@ -13,6 +13,22 @@ include_once __DIR__ . "/odf_type.php";
 abstract class ODF_Shortcut
 {
   /**
+   * Searchs inside the DOM
+   *
+   * @param DOMDocument $document
+   * @param String $path
+   * @param DOMNode $relative
+   *
+   * @return DOMList
+   */
+  public static function search($document, $path, $relative = null)
+  {
+    $xpath = new DOMXPath($document);
+
+    return $relative != null ? $xpath->query($path, $relative) : $xpath->query($path);
+  }
+
+  /**
    * Creates a new Element.
    *
    * @param DOMDocument $document
