@@ -37,6 +37,8 @@ abstract class ODF_Shortcut
    * @param Boolean $isleaf
    *
    * @return DOMElement
+   *
+   * @throws Exception
    */
   protected static function createElement($document, $title, $content, $isleaf = false)
   {
@@ -93,7 +95,7 @@ class ODF_Text extends ODF_Shortcut
   }
 
   /**
-   *
+   * Creates a Headline Element.
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -112,7 +114,7 @@ class ODF_Text extends ODF_Shortcut
   }
 
   /**
-   *
+   * Creates a Paragraph Element
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -131,7 +133,7 @@ class ODF_Text extends ODF_Shortcut
   }
 
   /**
-   *
+   * Creates a List Element.
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -150,7 +152,7 @@ class ODF_Text extends ODF_Shortcut
   }
 
   /**
-   *
+   * Creates a List-Header Element.
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -170,7 +172,7 @@ class ODF_Text extends ODF_Shortcut
   }
 
   /**
-   *
+   * Creates a List-Item Element.
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -215,7 +217,7 @@ class ODF_Spreadsheet extends ODF_Shortcut
   }
 
   /**
-   *
+   * Creates a Table Element.
    * 
    * @param DOMDocument $document
    * @param Mixed $content
@@ -229,7 +231,7 @@ class ODF_Spreadsheet extends ODF_Shortcut
   }
 
   /**
-   *
+   * Creates a Table-Row Element.
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -248,7 +250,8 @@ class ODF_Spreadsheet extends ODF_Shortcut
   }
 
   /**
-   *
+   * Create a Table-Cell Element.
+   * If $content is a String, it creates a Paragrah containing this String.
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -270,13 +273,23 @@ class ODF_Spreadsheet extends ODF_Shortcut
   }
 }
 
-/**
+
+/**                                                                                                                                                                                                                              
+ * Shortcuts primarily for Draw-documents.
  *
+ * @author Philipp Hirsch <itself@hanspolo.net>
+ * @license http://www.gnu.org/licenses/gpl.txt GNU Public License
+ * @package ODF-PHP
+ * @version 0.1
  */
 class ODF_Draw extends ODF_Shortcut
 {
   /**
+   * Returns the Element /body/spreadsheet.
    *
+   * @param DOMDocument $document
+   *
+   * @return DOMElement
    */
   public static function getContentBody($document)
   {
@@ -284,7 +297,7 @@ class ODF_Draw extends ODF_Shortcut
   }
 
   /**
-   * 
+   * Creates a Frame Element.
    *
    * @param DOMDocument $document
    * @param Mixed $content
@@ -309,11 +322,18 @@ class ODF_Draw extends ODF_Shortcut
   }
 
   /**
+   * Creates a Image Element.
    *
+   * @param DOMDocument $document
+   * @param Mixed $content
+   * @param Array $attributes
+   *
+   * @return DOMElement
    */
   public static function createImage($document, $content, $attributes = array())
   {
     $allowed_attributes = array(ODF_Attribute::href, "xlink:type", "xlink:show", "xlink:actuate");
+
     $attributes["xlink:type"] = "simple";
     $attributes["xlink:show"] = "embed";
     $attributes["xlink:actuate"] = "onLoad";

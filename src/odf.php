@@ -22,7 +22,7 @@ class ODF
   public $others;
 
   /**
-   *
+   * Constructor of the ODF class.
    */
   public function __construct()
   {
@@ -33,13 +33,15 @@ class ODF
    * Loads an existing file from disk.
    *
    * @param String $path
+   *
+   * @throws Exception
    */
   public function open($path)
   {
     $zip = new ZipArchive();
 
     if ($zip->open($path) !== true)
-      throw new \Exception("Can't open file $path");
+      throw new Exception("Can't open file $path");
 
     for ($i = 0; $i < $zip->numFiles; $i++)
       {
@@ -81,6 +83,8 @@ class ODF
    * Opens an empty file.
    *
    * @param String $type
+   *
+   * @throws Exception
    */
   public function create($type)
   {
@@ -106,6 +110,8 @@ class ODF
    * Saves the file to the disk.
    *
    * @param String $path
+   *
+   * @throws Exception
    */
   public function save($path)
   {
@@ -130,7 +136,7 @@ class ODF
     $success &= $zip->close();
 
     if (!$success)
-      throw new \Exception("Can't save file $path");
+      throw new Exception("Can't save file $path");
   }
 
   /**
