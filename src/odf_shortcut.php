@@ -307,11 +307,9 @@ class ODF_Draw extends ODF_Shortcut
    */
   public static function createFrame($document, $content, $attributes = array())
   {
-    $allowed_attributes = array("draw:style-name", "svg:width", "svg:height", "text:anchor-type", "draw:z-index");
+    $allowed_attributes = array("draw:style-name", ODF_Attribute::image_height, ODF_Attribute::image_width, "text:anchor-type", "draw:z-index");
 
     $attributes["draw:style-name"] = "fr1";
-    $attributes["svg:width"] = "15.042cm";
-    $attributes["svg:height"] = "3.076cm";
     $attributes["text:anchor-type"] = "paragraph";
     $attributes["draw:z-index"] = 0;
 

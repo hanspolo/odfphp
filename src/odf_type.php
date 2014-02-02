@@ -41,4 +41,6 @@ class ODF_Attribute
 {
   const visibility = "office:visibility";
   const href = "xlink:href";
+  const image_width = "svg:width";
+  const image_height = "svg:height";
 }
