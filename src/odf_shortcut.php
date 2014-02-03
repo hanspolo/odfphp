@@ -229,7 +229,12 @@ class ODF_Spreadsheet extends ODF_Shortcut
    */
   public static function createTable($document, $content, $attributes = array())
   {
+    $allowed_attributes = array();
 
+    $table = self::createElement($document, ODF_Node::table, $content);
+    self::setAttributes($row, $attributes, $allowed_attributes);
+
+    return $table;
   }
 
   /**
