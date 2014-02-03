@@ -42,7 +42,7 @@ abstract class ODF_Shortcut
    */
   protected static function createElement($document, $title, $content, $isleaf = false)
   {
-    if (is_string($content))
+    if (is_string($content) or is_numeric($content))
       $element = $document->createElement($title, $content);
     else if (!$isleaf && $content instanceof DOMNode)
       {
