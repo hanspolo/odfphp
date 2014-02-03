@@ -42,7 +42,9 @@ abstract class ODF_Shortcut
    */
   protected static function createElement($document, $title, $content, $isleaf = false)
   {
-    if (is_string($content) or is_numeric($content))
+    if (is_null($content))
+      $element = $document->createElement($title);
+    else if (is_string($content))
       $element = $document->createElement($title, $content);
     else if (!$isleaf && $content instanceof DOMNode)
       {
@@ -50,7 +52,7 @@ abstract class ODF_Shortcut
 	$element->appendChild($content);
       }
     else
-      throw new Exception('Content has to be a String' . ($isleaf ? '' : ' or DOMNode'));
+      throw new Exception('Content has to be a String' . ($isleaf ? '' : ' or a DOMNode'));
 
     return $element;
   }

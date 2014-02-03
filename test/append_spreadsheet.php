@@ -19,7 +19,8 @@ $itema3 = ODF_Spreadsheet::createTableCell($sheet->content, "Item A.3");
 $itemb3 = ODF_Spreadsheet::createTableCell($sheet->content, "Item B.3");
 $itemc3 = ODF_Spreadsheet::createTableCell($sheet->content, "Item C.3");
 
-$row3 = ODF_Spreadsheet::createTableRow($sheet->content, $itema3);
+$row3 = ODF_Spreadsheet::createTableRow($sheet->content, null);
+$row3->appendChild($itema3);
 $row3->appendChild($itemb3);
 $row3->appendChild($itemc3);
 
