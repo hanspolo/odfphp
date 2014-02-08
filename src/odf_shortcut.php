@@ -150,7 +150,7 @@ class ODF_Text extends ODF_Shortcut
    */
   public static function createList($content = null, $attributes = array())
   {
-    $allowed_attributes = array();
+    $allowed_attributes = array(ODF_Attribute::continue_list, ODF_Attribute::continue_numbering, ODF_Attribute::style_name, ODF_Attribute::id);
 
     $list = self::createElement(ODF_Node::list_body, $content);
     self::setAttributes($list, $attributes, $allowed_attributes);
@@ -168,7 +168,7 @@ class ODF_Text extends ODF_Shortcut
    */
   public static function createListHeader($content = null, $attributes = array())
   {
-    $allowed_attributes = array();
+    $allowed_attributes = array(ODF_Attribute::id);
 
     $listheader = self::createElement(ODF_Node::list_header, $content);
 
@@ -187,7 +187,7 @@ class ODF_Text extends ODF_Shortcut
    */
   public static function createListItem($content = null, $attributes = array())
   {
-    $allowed_attributes = array();
+    $allowed_attributes = array(ODF_Attribute::start_value, ODF_Attribute::style_override, ODF_Attribute::id);
 
     if (is_string($content))
       $content = self::createParagraph($content, $attributes);

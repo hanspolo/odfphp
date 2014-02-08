@@ -40,7 +40,17 @@ class ODF_Node
 class ODF_Attribute
 {
   const visibility = "office:visibility";
+
   const href = "xlink:href";
+
   const image_width = "svg:width";
   const image_height = "svg:height";
+
+  const id = "xml:id";
+
+  const continue_list = "text:continue-list";
+  const continue_numbering = "text:continue-numbering";
+  const start_value = "text:start-value";
+  const style_name = "text:style-name";
+  const style_override = "text:style-override";
 }
