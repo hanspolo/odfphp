@@ -12,18 +12,27 @@ include_once __DIR__ . "/odf_type.php";
  */
 abstract class ODF_Shortcut
 {
+  private static $document;
+  
+  /**
+   *
+   */
+  public static function setDocument(&$document)
+  {
+    self::$document = $document;
+  }
+
   /**
    * Searchs inside the DOM
    *
-   * @param DOMDocument $document
    * @param String $path
    * @param DOMNode $relative
    *
    * @return DOMList
    */
-  public static function search($document, $path, $relative = null)
+  public static function search($path, $relative = null)
   {
-    $xpath = new DOMXPath($document);
+    $xpath = new DOMXPath(self::$document);
 
     return $relative != null ? $xpath->query($path, $relative) : $xpath->query($path);
   }
@@ -31,7 +40,6 @@ abstract class ODF_Shortcut
   /**
    * Creates a new Element.
    *
-   * @param DOMDocument $document
    * @param String $title
    * @param Mixed $content
    * @param Boolean $isleaf
@@ -40,15 +48,15 @@ abstract class ODF_Shortcut
    *
    * @throws Exception
    */
-  protected static function createElement($document, $title, $content, $isleaf = false)
+  protected static function createElement($title, $content, $isleaf = false)
   {
     if (is_null($content))
-      $element = $document->createElement($title);
+      $element = self::$document->createElement($title);
     else if (is_string($content))
-      $element = $document->createElement($title, $content);
+      $element = self::$document->createElement($title, $content);
     else if (!$isleaf && $content instanceof DOMNode)
       {
-	$element = $document->createElement($title);
+	$element = self::$document->createElement($title);
 	$element->appendChild($content);
       }
     else
@@ -99,17 +107,16 @@ class ODF_Text extends ODF_Shortcut
   /**
    * Creates a Headline Element.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createHeading($document, $content, $attributes = array())
+  public static function createHeading($content = null, $attributes = array())
   {
     $allowed_attributes = array("text:style-name");
 
-    $h = self::createElement($document, ODF_Node::h, $content);
+    $h = self::createElement(ODF_Node::h, $content);
     self::setAttributes($h, $attributes, $allowed_attributes);
 
     return $h;
@@ -118,17 +125,16 @@ class ODF_Text extends ODF_Shortcut
   /**
    * Creates a Paragraph Element
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createParagraph($document, $content, $attributes = array())
+  public static function createParagraph($content = null, $attributes = array())
   {
     $allowed_attributes = array();
 
-    $p = self::createElement($document, ODF_Node::p, $content);
+    $p = self::createElement(ODF_Node::p, $content);
     self::setAttributes($p, $attributes, $allowed_attributes);
 
     return $p;
@@ -137,17 +143,16 @@ class ODF_Text extends ODF_Shortcut
   /**
    * Creates a List Element.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createList($document, $content, $attributes = array())
+  public static function createList($content = null, $attributes = array())
   {
     $allowed_attributes = array();
 
-    $list = self::createElement($document, ODF_Node::list_body, $content);
+    $list = self::createElement(ODF_Node::list_body, $content);
     self::setAttributes($list, $attributes, $allowed_attributes);
 
     return $list;
@@ -156,17 +161,16 @@ class ODF_Text extends ODF_Shortcut
   /**
    * Creates a List-Header Element.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createListHeader($document, $content, $attributes = array())
+  public static function createListHeader($content = null, $attributes = array())
   {
     $allowed_attributes = array();
 
-    $listheader = self::createElement($document, ODF_Node::list_header, $content);
+    $listheader = self::createElement(ODF_Node::list_header, $content);
 
     self::setAttributes($listheader, $attributes, $allowed_attributes);
 
@@ -176,20 +180,19 @@ class ODF_Text extends ODF_Shortcut
   /**
    * Creates a List-Item Element.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createListItem($document, $content, $attributes = array())
+  public static function createListItem($content = null, $attributes = array())
   {
     $allowed_attributes = array();
 
     if (is_string($content))
-      $content = self::createParagraph($document, $content, $attributes);
+      $content = self::createParagraph($content, $attributes);
 
-    $listitem = self::createElement($document, ODF_Node::list_item, $content);
+    $listitem = self::createElement(ODF_Node::list_item, $content);
     self::setAttributes($listitem, $attributes, $allowed_attributes);
 
     return $listitem;
@@ -221,17 +224,16 @@ class ODF_Spreadsheet extends ODF_Shortcut
   /**
    * Creates a Table Element.
    * 
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createTable($document, $content, $attributes = array())
+  public static function createTable($content = null, $attributes = array())
   {
     $allowed_attributes = array();
 
-    $table = self::createElement($document, ODF_Node::table, $content);
+    $table = self::createElement(ODF_Node::table, $content);
     self::setAttributes($row, $attributes, $allowed_attributes);
 
     return $table;
@@ -240,17 +242,16 @@ class ODF_Spreadsheet extends ODF_Shortcut
   /**
    * Creates a Table-Row Element.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createTableRow($document, $content, $attributes = array())
+  public static function createTableRow($content = null, $attributes = array())
   {
     $allowed_attributes = array();
 
-    $row = self::createElement($document, ODF_Node::table_row, $content);
+    $row = self::createElement(ODF_Node::table_row, $content);
     self::setAttributes($row, $attributes, $allowed_attributes);
 
     return $row;
@@ -260,20 +261,19 @@ class ODF_Spreadsheet extends ODF_Shortcut
    * Create a Table-Cell Element.
    * If $content is a String, it creates a Paragrah containing this String.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createTableCell($document, $content, $attributes = array())
+  public static function createTableCell($content = null, $attributes = array())
   {
     $allowed_attributes = array();
 
     if (is_string($content))
-      $content = ODF_Text::createParagraph($document, $content, $attributes);
+      $content = ODF_Text::createParagraph($content, $attributes);
 
-    $cell = self::createElement($document, ODF_Node::table_cell, $content);
+    $cell = self::createElement(ODF_Node::table_cell, $content);
     self::setAttributes($cell, $attributes, $allowed_attributes);
 
     return $cell;
@@ -281,7 +281,7 @@ class ODF_Spreadsheet extends ODF_Shortcut
 }
 
 
-/**                                                                                                                                                                                                                              
+/**
  * Shortcuts primarily for Draw-documents.
  *
  * @author Philipp Hirsch <itself@hanspolo.net>
@@ -306,13 +306,12 @@ class ODF_Draw extends ODF_Shortcut
   /**
    * Creates a Frame Element.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createFrame($document, $content, $attributes = array())
+  public static function createFrame($content = null, $attributes = array())
   {
     $allowed_attributes = array("draw:style-name", ODF_Attribute::image_height, ODF_Attribute::image_width, "text:anchor-type", "draw:z-index");
 
@@ -320,7 +319,7 @@ class ODF_Draw extends ODF_Shortcut
     $attributes["text:anchor-type"] = "paragraph";
     $attributes["draw:z-index"] = 0;
 
-    $frame = self::createElement($document, ODF_Node::frame, $content);
+    $frame = self::createElement(ODF_Node::frame, $content);
     self::setAttributes($frame, $attributes, $allowed_attributes);
 
     return $frame;
@@ -329,13 +328,12 @@ class ODF_Draw extends ODF_Shortcut
   /**
    * Creates a Image Element.
    *
-   * @param DOMDocument $document
    * @param Mixed $content
    * @param Array $attributes
    *
    * @return DOMElement
    */
-  public static function createImage($document, $content, $attributes = array())
+  public static function createImage($content = null, $attributes = array())
   {
     $allowed_attributes = array(ODF_Attribute::href, "xlink:type", "xlink:show", "xlink:actuate");
 
@@ -349,7 +347,7 @@ class ODF_Draw extends ODF_Shortcut
 	$content = "";
       }
 
-    $image = self::createElement($document, ODF_Node::image, $content);
+    $image = self::createElement(ODF_Node::image, $content);
     self::setAttributes($image, $attributes, $allowed_attributes);
 
     return $image;

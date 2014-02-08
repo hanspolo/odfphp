@@ -8,13 +8,15 @@ $text->create("text");
 
 $content = ODF_Text::getContentBody($text);
 
-$content->appendChild(ODF_Text::createHeading($text->content, "Headline 1"));
-$content->appendChild(ODF_Text::createParagraph($text->content, "Using a paragraph shortcut."));
-$content->appendChild(ODF_Text::createParagraph($text->content, "And creating another paragraph"));
+ODF_Shortcut::setDocument($text->content);
 
-$item1 = ODF_Text::createListItem($text->content, "Item 1");
-$item2 = ODF_Text::createListItem($text->content, "Item 2");
-$list = ODF_Text::createList($text->content, $item1);
+$content->appendChild(ODF_Text::createHeading("Headline 1"));
+$content->appendChild(ODF_Text::createParagraph("Using a paragraph shortcut."));
+$content->appendChild(ODF_Text::createParagraph("And creating another paragraph"));
+
+$item1 = ODF_Text::createListItem("Item 1");
+$item2 = ODF_Text::createListItem("Item 2");
+$list = ODF_Text::createList($item1);
 $list->appendChild($item2);
 
 $content->appendChild($list);
