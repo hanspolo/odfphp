@@ -132,7 +132,7 @@ class ODF_Text extends ODF_Shortcut
    */
   public static function createParagraph($content = null, $attributes = array())
   {
-    $allowed_attributes = array();
+    $allowed_attributes = array(ODF_Attribute::class_names, ODF_Attribute::cond_style_name, ODF_Attribute::text_id, ODF_Attribute::style_name, ODF_Attribute::about, ODF_Attribute::content, ODF_Attribute::datatype, ODF_Attribute::property, ODF_Attribute::id);
 
     $p = self::createElement(ODF_Node::p, $content);
     self::setAttributes($p, $attributes, $allowed_attributes);

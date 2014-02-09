@@ -49,6 +49,13 @@ class ODF_Attribute
 
   const id = "xml:id";
 
+  const about = "xhtml:about";
+  const content = "xhtml:content";
+  const datatype = "xhtml:datatype";
+  const property = "xhtml:property";
+
+  const class_names = "text:class-names";
+  const cond_style_name = "text:cond-style-name";
   const continue_list = "text:continue-list";
   const continue_numbering = "text:continue-numbering";
   const list_id = "text:list-id";
@@ -56,5 +63,6 @@ class ODF_Attribute
   const start_value = "text:start-value";
   const style_name = "text:style-name";
   const style_override = "text:style-override";
+  const text_id = "text:id";
   const text_level = "text:level";
 }
