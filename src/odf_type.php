@@ -20,6 +20,8 @@ class ODF_Node
   const list_item = "text:list-item";
   const line_break = "text:line-break";
   const numbered_p = "text:numbered-paragraph";
+  const page_sequence = "text:page-sequence";
+  const page = "text:page";
 
   const table = "table:table";
   const table_row = "table:table-row";
