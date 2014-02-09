@@ -114,7 +114,7 @@ class ODF_Text extends ODF_Shortcut
    */
   public static function createHeading($content = null, $attributes = array())
   {
-    $allowed_attributes = array("text:style-name");
+    $allowed_attributes = array(ODF_Attribute::class_names, ODF_Attribute::cond_style_name, ODF_Attribute::text_id, ODF_Attribute::is_list_header, ODF_Attribute::outline_level, ODF_Attribute::restart_numbering, ODF_Attribute::start_value, ODF_Attribute::style_name, ODF_Attribute::about, ODF_Attribute::content, ODF_Attribute::datatype, ODF_Attribute::property, ODF_Attribute::id);
 
     $h = self::createElement(ODF_Node::h, $content);
     self::setAttributes($h, $attributes, $allowed_attributes);
