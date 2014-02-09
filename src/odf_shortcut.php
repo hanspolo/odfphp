@@ -197,6 +197,27 @@ class ODF_Text extends ODF_Shortcut
 
     return $listitem;
   }
+
+  /**
+   * Creates a Numbered-Paragraph Element.
+   *
+   * @param Mixed $content
+   * @param Array $attributes
+   *
+   * @return DOMElement
+   */
+  public static function createNumberedParagraph($content = null, $attributes = array())
+  {
+    $allowed_attributes = array(ODF_Attribute::continue_list, ODF_Attribute::text_level, ODF_Attribute::list_id, ODF_attribute::start_value, ODF_Attribute::style_name, ODF_Attribute::id);
+
+    if (is_string($content))
+      $content = self::createParagraph($content, $attributes);
+
+    $numberedp = self::createElement(ODF_Node::numbered_p, $content);
+    self::setAttributes($numberedp, $attributes, $allowed_attributes);
+
+    return $numberedp;
+  }
 }
 
 /**

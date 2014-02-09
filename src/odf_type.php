@@ -19,6 +19,7 @@ class ODF_Node
   const list_header = "text:list-header";
   const list_item = "text:list-item";
   const line_break = "text:line-break";
+  const numbered_p = "text:numbered-paragraph";
 
   const table = "table:table";
   const table_row = "table:table-row";
@@ -50,7 +51,9 @@ class ODF_Attribute
 
   const continue_list = "text:continue-list";
   const continue_numbering = "text:continue-numbering";
+  const list_id = "text:list-id";
   const start_value = "text:start-value";
   const style_name = "text:style-name";
   const style_override = "text:style-override";
+  const text_level = "text:level";
 }

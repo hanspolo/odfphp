@@ -14,6 +14,8 @@ $content->appendChild(ODF_Text::createHeading("Headline 1"));
 $content->appendChild(ODF_Text::createParagraph("Using a paragraph shortcut."));
 $content->appendChild(ODF_Text::createParagraph("And creating another paragraph"));
 
+$content->appendChild(ODF_Text::createNumberedParagraph("A numbered paragraph"));
+
 $item1 = ODF_Text::createListItem("Item 1");
 $item2 = ODF_Text::createListItem("Item 2");
 $list = ODF_Text::createList($item1);
