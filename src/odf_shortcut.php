@@ -254,6 +254,24 @@ class ODF_Text extends ODF_Shortcut
 
     return $page;
   }
+
+  /**
+   * Creates a Section Element.
+   *
+   * @param Mixed $content
+   * @param Array $attributes
+   *
+   * @return DOMElement
+   */
+  public static function createSection($content = null, $attributes = array())
+  {
+    $allowed_attributes = array(ODF_Attribute::text_condition, ODF_Attribute::text_display, ODF_Attribute::text_name, ODF_Attribute::text_protected, ODF_Attribute::text_protection_key, ODF_Attribute::text_protection_key_digest_algorithm, ODF_Attribute::style_name, ODF_Attribute::id);
+
+    $section = selct::createElement(ODF_Node::section, $content);
+    self::setAttributes($section, $attributes, $allowed_attributes);
+
+    return $section;
+  }
 }
 
 /**

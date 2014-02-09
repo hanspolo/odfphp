@@ -22,6 +22,7 @@ class ODF_Node
   const numbered_p = "text:numbered-paragraph";
   const page_sequence = "text:page-sequence";
   const page = "text:page";
+  const section = "text:section";
 
   const table = "table:table";
   const table_row = "table:table-row";
@@ -69,5 +70,11 @@ class ODF_Attribute
   const style_name = "text:style-name";
   const style_override = "text:style-override";
   const text_id = "text:id";
+  const text_condition = "text:condition";
+  const text_display = "text:display";
   const text_level = "text:level";
+  const text_name = "text:name";
+  const text_protected = "text:protected";
+  const text_protection_key = "text:protection-key";
+  const text_protection_key_digest_algorithm = "text:protection_key_digest_algorithm";
 }
