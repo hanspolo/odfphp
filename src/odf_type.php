@@ -52,6 +52,7 @@ class ODF_Attribute
   const continue_list = "text:continue-list";
   const continue_numbering = "text:continue-numbering";
   const list_id = "text:list-id";
+  const master_page_name = "text:master-page-name";
   const start_value = "text:start-value";
   const style_name = "text:style-name";
   const style_override = "text:style-override";

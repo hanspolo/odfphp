@@ -18,7 +18,7 @@ $content->appendChild(ODF_Text::createNumberedParagraph("A numbered paragraph"))
 
 $item1 = ODF_Text::createListItem("Item 1");
 $item2 = ODF_Text::createListItem("Item 2");
-$list = ODF_Text::createList($item1);
+$list = ODF_Text::createList($item1, array(ODF_Attribute::style_name => "L1"));
 $list->appendChild($item2);
 
 $content->appendChild($list);

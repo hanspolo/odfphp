@@ -218,6 +218,42 @@ class ODF_Text extends ODF_Shortcut
 
     return $numberedp;
   }
+
+  /**
+   * Creates a Page-Sequence Element.
+   *
+   * @param Mixed $content
+   * @param Array $attributes
+   *
+   * @return DOMElement
+   */
+  public static function createPageSequence($content = null, $attributes = array())
+  {
+    $allowed_attributes = array();
+
+    $pagesequence = self::createElement(ODF_Node::page_sequence, $content);
+    self::setAttributes($pagesequnce, $attributes, $allowed_attributes);
+
+    return $pagesequence;
+  }
+
+  /**
+   * Creates a Page Element.
+   *
+   * @param Mixed $content
+   * @param Array $attributes
+   *
+   * @return DOMElement
+   */
+  public static function createPage($content = null, $attributes = array())
+  {
+    $allowed_attributes = array(ODF_Attribute::master_page_name);
+
+    $page = self::createElement(ODF_Node::page, $content);
+    self::setAttributes($page, $attributes, $allowed_attributes);
+
+    return $page;
+  }
 }
 
 /**
