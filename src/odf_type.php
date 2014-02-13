@@ -31,6 +31,10 @@ class ODF_Node
 
   const frame = "draw:frame";
   const image = "draw:image";
+
+  const style = "style:style";
+  const paragraph_properties = "style:paragraph-properties";
+  const text_properties = "style:text-properties";
 }
 
 /**
